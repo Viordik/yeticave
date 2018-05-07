@@ -135,7 +135,14 @@ $goods = [
                         <div class="lot__state">
                             <div class="lot__rate">
                                 <span class="lot__amount">Стартовая цена</span>
-                                <span class="lot__cost"><?= $goods['price']; ?><b class="rub">р</b></span>
+
+                                <!-- PHP код, проверяет цену товара, если меньше 1000 то значение не форматируется
+                                , если число больше 1000, то тысяная часть отделяется пробелом -->
+                                <?php if ($goods['price'] < 1000): ?>
+                                    <span class="lot__cost"><?= $goods['price']; ?><b class="rub">р</b></span>
+                                <?php else:?>
+                                    <span class="lot__cost"><?= number_format($goods['price'], 0, ',', ' '); ?><b class="rub">р</b></span>
+                                <?php endif?>
                             </div>
                             <div class="lot__timer timer">
 
