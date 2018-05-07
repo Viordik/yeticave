@@ -130,7 +130,7 @@ $goods = [
                         <img src= <?= $goods['img']; ?> width="350" height="260" alt="Сноуборд">
                     </div>
                     <div class="lot__info">
-                        <span class="lot__category"><?= $listOfProducts[0]; ?></span>
+                        <span class="lot__category"><?= $goods['category']; ?></span>
                         <h3 class="lot__title"><a class="text-link" href="lot.html"><?= $goods['name']; ?></a></h3>
                         <div class="lot__state">
                             <div class="lot__rate">
