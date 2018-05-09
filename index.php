@@ -11,24 +11,6 @@ $user_name = 'Константин';
 $user_avatar = './img/user.jpg';
 include('./templates/menu-list.php');
 include('./templates/goods.php');
-
-$lot = null;
-
-if (isset($_GET['lot_id'])) {
-	$lot_id = $_GET['lot_id'];
-
-	foreach ($goods as $goods) {
-		if ($goods['id'] == $lot_id) {
-			$lot = $goods;
-			break;
-		}
-	}
-}
-
-if (!$lot) {
-	http_response_code(404);
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -107,24 +89,24 @@ if (!$lot) {
         </div>
         <ul class="lots__list">
         <!-- PHP код для отображения блоков с лбъявлениями -->
-            <?php foreach ($goods as $key => $goods): ?>
+            <?php foreach ($goods as $key => $good): ?>
                 <li class="lots__item lot">
                     <div class="lot__image">
-                        <img src= <?= $goods['img']; ?> width="350" height="260" alt="Сноуборд">
+                        <img src= <?= $good['img']; ?> width="350" height="260" alt="Сноуборд">
                     </div>
                     <div class="lot__info">
-                        <span class="lot__category"><?= $goods['category']; ?></span>
-                        <h3 class="lot__title"><a class="text-link" href='./lot.php?lot_id=<?=$goods['id']?>'><?= $goods['name']; ?></a></h3>
+                        <span class="lot__category"><?= $good['category']; ?></span>
+                        <h3 class="lot__title"><a class="text-link" href='./lot.php?lot_id=<?=$good['id']?>'><?= $good['name']; ?></a></h3>
                         <div class="lot__state">
                             <div class="lot__rate">
                                 <span class="lot__amount">Стартовая цена</span>
 
                                 <!-- PHP код, проверяет цену товара, если меньше 1000 то значение не форматируется
                                 , если число больше 1000, то тысяная часть отделяется пробелом -->
-                                <?php if ($goods['price'] < 1000): ?>
-                                    <span class="lot__cost"><?= $goods['price']; ?><b class="rub">р</b></span>
+                                <?php if ($good['price'] < 1000): ?>
+                                    <span class="lot__cost"><?= $good['price']; ?><b class="rub">р</b></span>
                                 <?php else:?>
-                                    <span class="lot__cost"><?= number_format($goods['price'], 0, ',', ' '); ?><b class="rub">р</b></span>
+                                    <span class="lot__cost"><?= number_format($good['price'], 0, ',', ' '); ?><b class="rub">р</b></span>
                                 <?php endif?>
                             </div>
                             <div class="lot__timer timer">
