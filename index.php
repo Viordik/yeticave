@@ -9,7 +9,26 @@ $is_auth = (bool) rand(0, 1);
 
 $user_name = 'Константин';
 $user_avatar = './img/user.jpg';
-include('./templates/data.php');
+include('./templates/menu-list.php');
+include('./templates/goods.php');
+
+$lot = null;
+
+if (isset($_GET['lot_id'])) {
+	$lot_id = $_GET['lot_id'];
+
+	foreach ($goods as $goods) {
+		if ($goods['id'] == $lot_id) {
+			$lot = $goods;
+			break;
+		}
+	}
+}
+
+if (!$lot) {
+	http_response_code(404);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -31,7 +50,7 @@ include('./templates/data.php');
             <input type="search" name="search" placeholder="Поиск лота">
             <input class="main-header__search-btn" type="submit" name="find" value="Найти">
         </form>
-        <a class="main-header__add-lot button" href="add-lot.html">Добавить лот</a>
+        <a class="main-header__add-lot button" href="./add.php">Добавить лот</a>
 
         <nav class="user-menu">
 
@@ -41,7 +60,7 @@ include('./templates/data.php');
                 <img src= <?= $user_avatar?> alt="Пользователь" width="40" height="40">
             </div>
             <div class="user-menu__logged">
-                <p><?= $user_name ?></p
+                <p><?= $user_name ?></p>
             </div>
             <?php else: ?>
             <ul class="user-menu__list">
@@ -95,7 +114,7 @@ include('./templates/data.php');
                     </div>
                     <div class="lot__info">
                         <span class="lot__category"><?= $goods['category']; ?></span>
-                        <h3 class="lot__title"><a class="text-link" href="lot.html"><?= $goods['name']; ?></a></h3>
+                        <h3 class="lot__title"><a class="text-link" href='./lot.php?lot_id=<?=$goods['id']?>'><?= $goods['name']; ?></a></h3>
                         <div class="lot__state">
                             <div class="lot__rate">
                                 <span class="lot__amount">Стартовая цена</span>
