@@ -12,17 +12,14 @@ $user_avatar = './img/user.jpg';
 include('./templates/menu-list.php');
 include('./templates/goods.php');
 
+// цикл для присваивания id переменой lot и вывод информации о выбранном лоте на странице index.php
 $lot = null;
 
 if (isset($_GET['lot_id'])) {
 	$lot_id = $_GET['lot_id'];
 
-	foreach ($goods as $goods) {
-		if ($goods['id'] == $lot_id) {
-			$lot = $goods;
-			break;
-		}
-	}
+    $goodKey = array_search($lot_id, array_column($goods, 'id'));
+    $lot = $goods[$goodKey];
 }
 
 if (!$lot) {
@@ -99,13 +96,13 @@ if (!$lot) {
   </nav>
   <section class="lot-item container">
     <?php if (isset($lot)) :?>
-        <h2><?= $goods['name']; ?></h2>
+        <h2><?= $lot['name']; ?></h2>
         <div class="lot-item__content">
         <div class="lot-item__left">
             <div class="lot-item__image">
-            <img src= <?= $goods['img']; ?> width="730" height="548" alt="Сноуборд">
+            <img src= <?= $lot['img']; ?> width="730" height="548" alt="Сноуборд">
             </div>
-            <p class="lot-item__category">Категория: <span><?= $goods['category']; ?></span></p>
+            <p class="lot-item__category">Категория: <span><?= $lot['category']; ?></span></p>
             <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
             снег
             мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
@@ -125,7 +122,7 @@ if (!$lot) {
             <div class="lot-item__cost-state">
                 <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                <span class="lot-item__cost">10 999</span>
+                <span class="lot-item__cost"><?= number_format($lot['price'], 0, ',', ' '); ?></span>
                 </div>
                 <div class="lot-item__min-cost">
                 Мин. ставка <span>12 000 р</span>
